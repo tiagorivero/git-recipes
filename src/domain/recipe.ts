@@ -1,9 +1,11 @@
 export class Recipe {
   _name!: string;
+  _description!: string;
   _category?: string;
 
-  constructor(aName: string) {
+  constructor(aName: string, aDescription: string) {
     this.name = aName;
+    this._description = aDescription;
   }
 
   get name(): string {
@@ -18,6 +20,18 @@ export class Recipe {
     this._name = trimmed;
   }
 
+  get description(): string {
+    return this._description;
+  }
+
+  set description(aDescription: string) {
+    const trimmed = aDescription.trim();
+    if (trimmed.length === 0) {
+      throw new Error("La descripción de la receta no puede ser vacía.");
+    }
+    this._description = trimmed;
+  }
+
   get category(): string | undefined {
     return this._category;
   }
@@ -27,6 +41,6 @@ export class Recipe {
   }
 
   toString(): string {
-    return `Receta: ${this.name} - categoría: ${this.category}`;
+    return `Receta: ${this.name} - categoría: ${this.category} - descripción: ${this._description}`;
   }
 }
