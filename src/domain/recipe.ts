@@ -2,9 +2,11 @@ export class Recipe {
   _name!: string;
   _description!: string;
   _category?: string;
+  _preptime!: number;
 
-  constructor(aName: string, aDescription: string) {
+  constructor(aName: string, Apreptime: number, aDescription: string) {
     this.name = aName;
+    this.preptime = Apreptime;
     this._description = aDescription;
   }
 
@@ -18,6 +20,19 @@ export class Recipe {
       throw new Error("El nombre de la receta no puede ser vacío.");
     }
     this._name = trimmed;
+  }
+
+  get preptime(): number {
+    return this._preptime;
+  }
+
+  set preptime(Apreptime: number) {
+    if (!Apreptime) {
+      throw new Error("El tiempo de preparación de la receta no puede ser vacío.");
+    } else if(Apreptime < 0) {
+      throw new Error("El tiempo de preparación de la receta debe ser mayor a 0.");
+    }
+    this._preptime = Apreptime;
   }
 
   get description(): string {
@@ -41,6 +56,6 @@ export class Recipe {
   }
 
   toString(): string {
-    return `Receta: ${this.name} - categoría: ${this.category} - descripción: ${this._description}`;
+    return `Receta: ${this.name} - categoría: ${this.category} - descripción: ${this._description} - tiempo de preparación: ${this._preptime}`;
   }
 }
